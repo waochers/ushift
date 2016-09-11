@@ -12,8 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -104,7 +105,7 @@ public class user_dashboard extends AppCompatActivity {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
                 result="";
-                Log.e("one122323234343", "dfasdfveafewqa" );
+
                 String line = "";
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -113,12 +114,26 @@ public class user_dashboard extends AppCompatActivity {
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-                return result;
+
+                //Create an object of JSONObject and pass the JSON string into it.
+                JSONObject jsonRootObject = new JSONObject(result);
+
+//Now create the objects of JSON objects
+                JSONArray jsonArray = jsonRootObject.optJSONArray("result");
+
+// Create the object of the ith element of various objects
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+// Now get the data from various tags of the object
+                String xyz=jsonObject.optString("moving_id");
+                return xyz;
             } catch (MalformedURLException e) {
-                Log.e("one122323234343", "EXC" );
+
                 e.printStackTrace();
             } catch (IOException e) {
-                Log.e("one122323234343", "CAT" );
+
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
@@ -130,9 +145,9 @@ public class user_dashboard extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String xyz) {
 
-            dashboard.setText(result);
+            dashboard.setText(xyz);
 
 
 

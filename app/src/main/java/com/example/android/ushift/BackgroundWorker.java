@@ -21,6 +21,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * Created by vardan on 04-09-2016.
  */
@@ -66,6 +69,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 result += line;
+
             }
             Log.e("one", "" + result);
             bufferedReader.close();
